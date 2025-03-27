@@ -76,6 +76,8 @@ export class CompressionImageService {
         const filePath = path.join(this.storagePath, uniqueFilename);
         fs.writeFileSync(filePath, compressedBuffer);
 
+        this.logger.log(`Compressed image saved at: ${filePath}`); // Add log
+
         return uniqueFilename;
     }
 }

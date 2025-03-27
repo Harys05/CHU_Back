@@ -22,11 +22,20 @@ export class UploadService {
     /**
      * Saves a file to the storage path.
      * @param file - The file to save.
+     * @param dossier - The subfolder to save the file in. If empty, it defaults to 'default'.
      * @returns The filename of the saved file.
      */
-    saveFile(file: Express.Multer.File): string {
+    saveFile(file: Express.Multer.File, dossier?: string): string {
+        const subfolder = dossier && dossier.trim() !== '' ? dossier.trim() : 'default';
+        const folderPath = path.join(this.storagePath, subfolder);
+
+        // Ensure the subfolder exists
+        if (!fs.existsSync(folderPath)) {
+            fs.mkdirSync(folderPath, { recursive: true });
+        }
+
         const uniqueFilename = this.generateUniqueFilename(file.originalname);
-        const filePath = this.getFilePath(uniqueFilename);
+        const filePath = path.join(folderPath, uniqueFilename);
         fs.writeFileSync(filePath, file.buffer);
         this.logger.log(`File saved at: ${filePath}`);
         return uniqueFilename;
@@ -35,9 +44,12 @@ export class UploadService {
     /**
      * Deletes a file from the storage path.
      * @param filename - The name of the file to delete.
+     * @param dossier - The subfolder where the file is stored. If empty, it defaults to 'default'.
      */
-    deleteFile(filename: string): void {
-        const filePath = this.getFilePath(filename);
+    deleteFile(filename: string, dossier?: string): void {
+        const subfolder = dossier && dossier.trim() !== '' ? dossier.trim() : 'default';
+        const filePath = path.join(this.storagePath, subfolder, filename);
+
         if (fs.existsSync(filePath)) {
             fs.unlinkSync(filePath);
             this.logger.log(`File deleted: ${filePath}`);
@@ -47,19 +59,23 @@ export class UploadService {
     /**
      * Gets the full file path for a given filename.
      * @param filename - The name of the file.
+     * @param dossier - The subfolder where the file is stored. If empty, it defaults to 'default'.
      * @returns The full file path.
      */
-    getFilePath(filename: string): string {
-        return path.join(this.storagePath, filename);
+    getFilePath(filename: string, dossier?: string): string {
+        const subfolder = dossier && dossier.trim() !== '' ? dossier.trim() : 'default';
+        return path.join(this.storagePath, subfolder, filename);
     }
 
     /**
      * Reads a file from the storage path.
      * @param filename - The name of the file to read.
+     * @param dossier - The subfolder where the file is stored. If empty, it defaults to 'default'.
      * @returns The file buffer.
      */
-    readFile(filename: string): Buffer {
-        const filePath = this.getFilePath(filename);
+    readFile(filename: string, dossier?: string): Buffer {
+        const subfolder = dossier && dossier.trim() !== '' ? dossier.trim() : 'default';
+        const filePath = path.join(this.storagePath, subfolder, filename);
         this.logger.log(`Reading file from: ${filePath}`);
         if (!fs.existsSync(filePath)) {
             throw new Error(`File not found: ${filePath}`);
@@ -82,18 +98,20 @@ export class UploadService {
     /**
      * Generates a preview path for a given filename.
      * @param filename - The name of the file.
+     * @param dossier - The subfolder where the file is stored. If empty, it defaults to 'default'.
      * @returns The preview path.
      */
-    async generatePreview(filename: string): Promise<string> {
-        return this.getFilePath(filename);
+    async generatePreview(filename: string, dossier?: string): Promise<string> {
+        return this.getFilePath(filename, dossier);
     }
 
     /**
      * Generates an original preview path for a given filename.
      * @param filename - The name of the file.
+     * @param dossier - The subfolder where the file is stored. If empty, it defaults to 'default'.
      * @returns The original preview path.
      */
-    async generateOriginalPreview(filename: string): Promise<string> {
-        return this.getFilePath(filename);
+    async generateOriginalPreview(filename: string, dossier?: string): Promise<string> {
+        return this.getFilePath(filename, dossier);
     }
 }

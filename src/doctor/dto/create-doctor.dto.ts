@@ -5,17 +5,17 @@ export class CreateDoctorDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  nom: string;
+  name: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  specialite: string;
+  speciaization: string;
 
   @ApiProperty()
   @IsNotEmpty()
   @IsPhoneNumber('FR')
-  telephone: string;
+  phone: string;
 
   @ApiProperty()
   @IsNotEmpty()

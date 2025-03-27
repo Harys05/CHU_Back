@@ -11,8 +11,8 @@ export class Doctor {
   name: string;
 
   @Column({ length: 255 })
-  specialization: string;
-
+  speciaization: string;
+l
   @Column({ length: 255 })
   phone: string;
 
