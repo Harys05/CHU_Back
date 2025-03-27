@@ -8,6 +8,9 @@ import { TestModule } from './test/test.module';
 import { HistoriqueModule } from './historique/historique.module';
 import { EventModule } from './event/event.module';
 import { DoctorModule } from './doctor/doctor.module';
+import { ServiceModule } from './service/service.module';
+import { PatientModule } from './patient/patient.module';
+import { AppointmentModule } from './appointment/appointment.module';
 
 @Module({
   imports: [
@@ -27,6 +30,9 @@ import { DoctorModule } from './doctor/doctor.module';
     HistoriqueModule,
     EventModule,
     DoctorModule,
+    ServiceModule,
+    PatientModule,
+    AppointmentModule,
   ],
   controllers: [AppController],
   providers: [AppService],
