@@ -26,7 +26,6 @@ async function bootstrap() {
     .setDescription('API for managing the CHU Andrainjato') // More descriptive
     .setVersion('1.0')
     .addBearerAuth()
-    .addServer(configService.get<string>('APP_URL') || `http://localhost:${configService.get<number>('PORT') || 5000}`)
     .setVersion('1.0')
     .build();
 
