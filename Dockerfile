@@ -42,4 +42,4 @@ RUN mkdir -p /app/public/uploads && chmod -R 777 /app/public/uploads
 EXPOSE ${PORT}
 
 # Lancement de l'application
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start"]
