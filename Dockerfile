@@ -31,7 +31,7 @@ ENV POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 ENV JWT_SECRET=${JWT_SECRET}
 ENV JWT_EXPIRES=${JWT_EXPIRES}
 ENV CORS_ORIGIN=${CORS_ORIGIN}
-ENV PORT=8046
+ENV PORT=9094
 
 # Création du dossier des uploads pour éviter les erreurs si le volume n’est pas encore monté
 RUN mkdir -p /app/public/uploads && chmod -R 777 /app/public/uploads
