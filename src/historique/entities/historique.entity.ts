@@ -1,16 +1,16 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
 @Entity()
 export class Historique {
   @PrimaryGeneratedColumn()
-  id_historique: number;
+  id: number;
 
-  @Column({ length: 255 })
-  titre_historique: string;
+  @Column({ type: 'text' })
+  description: string;
 
-  @Column('text')
-  desc_historique: string;
+  @Column({ nullable: true })
+  photo: string;
 
-  @Column('text', { nullable: true })
-  photo_historique: string;
+  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
+  createdAt: Date;
 }

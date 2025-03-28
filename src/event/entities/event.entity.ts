@@ -16,4 +16,7 @@ export class Event {
 
   @Column({ length: 255 })
   location: string;
+
+  @Column({ nullable: true })
+  photo: string;
 }

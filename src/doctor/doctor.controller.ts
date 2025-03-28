@@ -21,7 +21,7 @@ export class DoctorController {
       type: 'object',
       properties: {
         name: { type: 'string' , example: 'Dr. John Doe' },
-        speciaization: { type: 'string', example: 'Cardiologist' },
+        specialization: { type: 'string', example: 'Cardiologist' },
         phone: { type: 'string', example: '1234567890' },
         email: { type: 'string' , example: '2L5yj@example.com' },
         photo: { type: 'string', format: 'binary' },
@@ -40,8 +40,8 @@ export class DoctorController {
       }
 
       // Validate DTO fields
-      const {name, speciaization, phone, email} = createDoctorDto;
-      if (!name || !speciaization || !phone || !email) {
+      const {name, specialization, phone, email} = createDoctorDto;
+      if (!name || !specialization || !phone || !email) {
         throw new HttpException('All fields are required', HttpStatus.BAD_REQUEST);
       }
 
@@ -85,7 +85,7 @@ export class DoctorController {
       type: 'object',
       properties: {
         name: { type: 'string', example: 'Dr. John Doe' },
-        speciaization: { type: 'string', example: 'Cardiologist' },
+        specialization: { type: 'string', example: 'Cardiologist' },
         phone: { type: 'string', example: '1234567890' },
         email: { type: 'string' , example: 'hIg8U@example.com' },
         photo: { type: 'string', format: 'binary'},
@@ -115,12 +115,12 @@ export class DoctorController {
       }
 
       // Update the doctor
-      const {name, speciaization, phone, email} = updateDoctorDto;
+      const {name, specialization, phone, email} = updateDoctorDto;
       if (name !== undefined) {
         updateDoctorDto.name = name;
       }
-      if (speciaization !== undefined) {
-        updateDoctorDto.speciaization = speciaization;
+      if (specialization !== undefined) {
+        updateDoctorDto.specialization = specialization;
       }
       if (phone !== undefined) {
         updateDoctorDto.phone = phone;

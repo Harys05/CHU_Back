@@ -10,7 +10,7 @@ export class CreateDoctorDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsString()
-  speciaization: string;
+  specialization: string;
 
   @ApiProperty()
   @IsNotEmpty()

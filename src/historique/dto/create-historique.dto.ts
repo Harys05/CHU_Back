@@ -1,4 +1,14 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString, IsOptional } from 'class-validator';
+
 export class CreateHistoriqueDto {
-    titre_historique: string;
-    desc_historique: string;
-  }
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsString()
+  description: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  photo?: string;
+}

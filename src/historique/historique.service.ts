@@ -1,9 +1,9 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { Historique } from './entities/historique.entity';
 import { CreateHistoriqueDto } from './dto/create-historique.dto';
 import { UpdateHistoriqueDto } from './dto/update-historique.dto';
-import { Historique } from './entities/historique.entity';
 
 @Injectable()
 export class HistoriqueService {
@@ -12,24 +12,31 @@ export class HistoriqueService {
     private historiqueRepository: Repository<Historique>,
   ) {}
 
-  create(createHistoriqueDto: CreateHistoriqueDto) {
+  async create(createHistoriqueDto: CreateHistoriqueDto): Promise<Historique> {
     const historique = this.historiqueRepository.create(createHistoriqueDto);
     return this.historiqueRepository.save(historique);
   }
 
-  findAll() {
-    return this.historiqueRepository.find();
+  async findAll(): Promise<Historique[]> {
+    return this.historiqueRepository.find({ order: { createdAt: 'DESC' } });
   }
 
-  findOne(id: number) {
-    return this.historiqueRepository.findOne({ where: { id_historique: id } });
+  async findOne(id: number): Promise<Historique> {
+    const historique = await this.historiqueRepository.findOne({ where: { id } });
+    if (!historique) {
+      throw new NotFoundException(`Historique with ID ${id} not found`);
+    }
+    return historique;
   }
 
-  update(id: number, updateHistoriqueDto: UpdateHistoriqueDto) {
-    return this.historiqueRepository.update(id, updateHistoriqueDto);
+  async update(id: number, updateHistoriqueDto: UpdateHistoriqueDto): Promise<Historique> {
+    const historique = await this.findOne(id);
+    this.historiqueRepository.merge(historique, updateHistoriqueDto);
+    return this.historiqueRepository.save(historique);
   }
 
-  remove(id: number) {
-    return this.historiqueRepository.delete(id);
+  async remove(id: number): Promise<void> {
+    const historique = await this.findOne(id);
+    await this.historiqueRepository.remove(historique);
   }
 }
