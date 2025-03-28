@@ -1,5 +1,5 @@
 # Utilisation d'une image officielle de Node.js
-FROM node:18-alpine
+FROM node:20-slim
 
 # Définition du répertoire de travail
 WORKDIR /app
