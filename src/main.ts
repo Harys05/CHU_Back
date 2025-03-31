@@ -15,7 +15,7 @@ async function bootstrap() {
 
   app.use(
     cors({
-      origin: corsOrigins,
+      origin: corsOrigins.length ? corsOrigins : '*',
       credentials: true,
     }),
   );
@@ -23,11 +23,9 @@ async function bootstrap() {
   // Swagger Configuration
   const config = new DocumentBuilder()
     .setTitle('CHU Andrainjato API')
-    .setDescription('API for managing the CHU Andrainjato') // More descriptive
+    .setDescription('API for managing the CHU Andrainjato')
     .setVersion('1.0')
     .addBearerAuth()
-    .addServer(configService.get<string>('APP_URL') || `http://localhost:${configService.get<number>('PORT') || 5000}`)
-    .setVersion('1.0')
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
