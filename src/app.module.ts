@@ -11,6 +11,7 @@ import { DoctorModule } from './doctor/doctor.module';
 import { ServiceModule } from './service/service.module';
 import { PatientModule } from './patient/patient.module';
 import { AppointmentModule } from './appointment/appointment.module';
+import { ScheduleModule } from './schedule/schedule.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { AppointmentModule } from './appointment/appointment.module';
     ServiceModule,
     PatientModule,
     AppointmentModule,
+    ScheduleModule,
   ],
   controllers: [AppController],
   providers: [AppService],

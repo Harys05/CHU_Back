@@ -1,4 +1,5 @@
 import { Appointment } from 'src/appointment/entities/appointment.entity';
+import { Schedule } from 'src/schedule/entities/schedule.entity';
 import { Service } from 'src/service/entities/service.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 
@@ -27,5 +28,8 @@ l
 
   @OneToMany(() => Service, service => service.doctor)
   services: Service[];
+
+  @OneToMany(() => Schedule, schedule => schedule.doctor)
+  schedules: Schedule[];
 
 }
